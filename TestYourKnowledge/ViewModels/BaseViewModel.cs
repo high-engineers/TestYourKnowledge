@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Domino.ViewModels
+namespace TestYourKnowledge.ViewModels
 {
     internal abstract class BaseViewModel : INotifyPropertyChanged
     {
