@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Domino.Models
+namespace TestYourKnowledge.Models
 {
     internal class DominoModel : INotifyPropertyChanged
     {

@@ -1,7 +1,7 @@
-﻿using Domino.ViewModels;
+﻿using TestYourKnowledge.ViewModels;
 using System.Windows.Controls;
 
-namespace Domino.Views
+namespace TestYourKnowledge.Views
 {
     /// <summary>
     /// Interaction logic for MainMenuView.xaml

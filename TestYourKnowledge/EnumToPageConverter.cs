@@ -1,11 +1,11 @@
-﻿using Domino.Models;
-using Domino.Views;
+﻿using TestYourKnowledge.Models;
+using TestYourKnowledge.Views;
 using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Domino
+namespace TestYourKnowledge
 {
     internal class EnumToPageConverter : MarkupExtension, IValueConverter
     {
@@ -19,8 +19,10 @@ namespace Domino
                     return new LeaderboardView();
                 case AppPage.MainMenu:
                     return new MainMenuView();
-                case AppPage.SumUp:
-                    return new SumUpView();
+                //case AppPage.SumUp:
+                //    return new SumUpV();
+                case AppPage.UserSetup:
+                    return new UserSetupView();
                 default:
                     return new MainMenuView();
             }

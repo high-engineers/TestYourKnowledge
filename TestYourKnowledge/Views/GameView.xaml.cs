@@ -1,10 +1,9 @@
-﻿using Domino.Models;
-using Domino.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using TestYourKnowledge.ViewModels;
 
-namespace Domino.Views
+namespace TestYourKnowledge.Views
 {
     /// <summary>
     /// Interaction logic for GameView.xaml

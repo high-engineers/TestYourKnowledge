@@ -1,15 +1,15 @@
-﻿using Domino.Models;
+﻿using TestYourKnowledge.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
 
-namespace Domino.ViewModels
+namespace TestYourKnowledge.ViewModels
 {
     internal class LeaderboardViewModel : BaseViewModel
     {
-        private List<Person> _top10;
-        public List<Person> Top10
+        private List<PlayerModel> _top10;
+        public List<PlayerModel> Top10
         {
             get => _top10;
             set
@@ -24,13 +24,13 @@ namespace Domino.ViewModels
             using (var reader = new StreamReader(path))
             {
                 reader.ReadLine();
-                var people = new List<Person>();
+                var people = new List<PlayerModel>();
                 while (!reader.EndOfStream)
                 {
                     var person = reader.ReadLine().Split(';');
-                    people.Add(new Person(person[0], int.Parse(person[1]), int.Parse(person[2])));
+                    people.Add(new PlayerModel(person[0], int.Parse(person[1]), int.Parse(person[2])));
                 }
-                var peopleInOrder = people.OrderByDescending(x => x.Level).ThenBy(x => x.Time).ToList();
+                var peopleInOrder = people.OrderByDescending(x => x.Level).ThenBy(x => x.TimeStart).ToList();
                 for (int i = 0; i < (peopleInOrder.Count < 10 ? peopleInOrder.Count : 10); i++)
                 {
                     Top10.Add(peopleInOrder[i]);
@@ -48,7 +48,7 @@ namespace Domino.ViewModels
         public LeaderboardViewModel()
         {
             MainMenuCommand = new RelayCommand(GoToMainMenu);
-            Top10 = new List<Person>();
+            Top10 = new List<PlayerModel>();
             LoadFromFile("Leaderboard.csv");
         }
     }

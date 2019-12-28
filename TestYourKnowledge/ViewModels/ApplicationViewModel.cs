@@ -1,6 +1,6 @@
-﻿using Domino.Models;
+﻿using TestYourKnowledge.Models;
 
-namespace Domino.ViewModels
+namespace TestYourKnowledge.ViewModels
 {
     internal class ApplicationViewModel : BaseViewModel
     {

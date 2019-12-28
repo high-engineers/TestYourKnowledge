@@ -1,9 +1,9 @@
-﻿using Domino.Models;
+﻿using TestYourKnowledge.Models;
 using System;
 using System.IO;
 using System.Windows.Input;
 
-namespace Domino.ViewModels
+namespace TestYourKnowledge.ViewModels
 {
     internal class SumUpViewModel : BaseViewModel
     {
@@ -40,8 +40,6 @@ namespace Domino.ViewModels
             }
         }
 
-        public Person Person { get; set; }
-
         public ICommand MainMenuCommand { get; set; }
 
         public void GoToMainMenu()
@@ -52,10 +50,10 @@ namespace Domino.ViewModels
 
         public void SaveToFile(string path)
         {
-            Person = new Person(Name, Convert.ToInt32(TimeFromStart), Level);
+            var person = new PlayerModel(Name, Convert.ToInt32(TimeFromStart), Level);
             using (var writer = new StreamWriter(path, true))
             {
-                writer.WriteLine($"{Person.Name};{Person.Time};{Person.Level}");
+                writer.WriteLine($"{person.Name};{person.TimeStart};{person.Level}");
             }
             GameViewModel.GameEnded = false;
         }

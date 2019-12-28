@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Domino.Properties
+namespace TestYourKnowledge.Properties
 {
 
 

@@ -1,27 +1,25 @@
-﻿using Domino.Models;
+﻿using TestYourKnowledge.Models;
 using System.Windows.Input;
 
-namespace Domino.ViewModels
+namespace TestYourKnowledge.ViewModels
 {
     internal class MainMenuViewModel : BaseViewModel
     {
-        public void NewGame()
-        {
-            ApplicationViewModel.Instance.CurrentPage = AppPage.Game;
-        }
-
         public void Leaderboard()
         {
             ApplicationViewModel.Instance.CurrentPage = AppPage.Leaderboard;
         }
-
-        public ICommand NewGameCommand { get; set; }
+        public void UserSetup()
+        {
+            ApplicationViewModel.Instance.CurrentPage = AppPage.UserSetup;
+        }
         public ICommand LeaderboardCommand { get; set; }
+        public ICommand UserSetupCommand { get; set; }
 
         public MainMenuViewModel()
         {
-            NewGameCommand = new RelayCommand(NewGame);
             LeaderboardCommand = new RelayCommand(Leaderboard);
+            UserSetupCommand = new RelayCommand(UserSetup);
         }
     }
 }

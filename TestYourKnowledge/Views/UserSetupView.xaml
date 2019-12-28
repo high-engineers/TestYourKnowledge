@@ -1,4 +1,4 @@
-﻿<Page x:Class="TestYourKnowledge.Views.SumUpView"
+﻿<Page x:Class="TestYourKnowledge.Views.UserSetupView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -14,17 +14,8 @@
                 <TextBox Text="{Binding Name}" Width="250"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="20" HorizontalAlignment="Center">
-                <TextBlock Style="{StaticResource BaseTextBlock}" Text="Time: "/>
-                <TextBlock Style="{StaticResource BaseTextBlock}" Text="{Binding TimeFromStart}"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="20" HorizontalAlignment="Center">
-                <TextBlock Style="{StaticResource BaseTextBlock}" Text="Level: "/>
-                <TextBlock Style="{StaticResource BaseTextBlock}" Text="{Binding Level}"/>
-            </StackPanel>
-
-            <Button Content="Save Score" Command="{Binding MainMenuCommand}" Height="50"/>
+            <Button Content="Play!" Command="{Binding PlayCommand}"/>
+            <Button Content="Main Menu" Command="{Binding MainMenuCommand}" Height="50"/>
         </StackPanel>
     </Grid>
 </Page>
