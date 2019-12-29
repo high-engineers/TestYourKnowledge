@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using TestYourKnowledge.Extensions;
 using TestYourKnowledge.Models;
 
 namespace TestYourKnowledge.ViewModels
@@ -14,7 +15,7 @@ namespace TestYourKnowledge.ViewModels
         private const double TimeLevelMultiplier = 0.9;
         private const int MaxLevel = 2;
 
-        private double _timePerAnswer = 1;
+        private double _timePerAnswer = 10;
         private DateTime _currentAnswerTimeStart;
         private int _correctLevelAnswers = 0;
 
@@ -53,7 +54,7 @@ namespace TestYourKnowledge.ViewModels
             {
                 while (!GameEnded)
                 {
-                    TimeLeft = (_currentAnswerTimeStart - DateTime.Now).Seconds + Convert.ToInt32(_timePerAnswer);
+                    TimeLeft = Convert.ToInt32(_timePerAnswer - _currentAnswerTimeStart.GetSecondsDifferenceFromNow()); 
                     if (TimeLeft <= 0)
                     {
                         GameEnded = true;

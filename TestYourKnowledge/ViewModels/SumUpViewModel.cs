@@ -19,8 +19,8 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
-        private double _timeFromStart;
-        public double TimeFromStart
+        private int _timeFromStart;
+        public int TimeFromStart
         {
             get => _timeFromStart;
             set
@@ -51,10 +51,15 @@ namespace TestYourKnowledge.ViewModels
 
         public void SaveToFile(string path)
         {
-            var person = new PlayerModel(Name, Convert.ToInt32(TimeFromStart), Level);
+            var playerResult = new PlayerResultModel
+            {
+                Name = Name,
+                Level = Level,
+                TimeResult = TimeFromStart
+            };
             using (var writer = new StreamWriter(path, true))
             {
-                writer.WriteLine($"{person.Name};{person.TimeStart};{person.Level}");
+                writer.WriteLine($"{playerResult.Name};{playerResult.TimeResult};{playerResult.Level}");
             }
             GameViewModel.GameEnded = false;
         }
@@ -68,7 +73,6 @@ namespace TestYourKnowledge.ViewModels
         {
             MainMenuCommand = new RelayCommand(GoToMainMenu);
             PlayAgainCommand = new RelayCommand(PlayAgain);
-            //get from now ext
             TimeFromStart = ApplicationViewModel.Instance.Game.TimeStart.GetSecondsDifferenceFromNow();
             Level = ApplicationViewModel.Instance.Game.LevelAchieved;
             Name = ApplicationViewModel.Instance.UserSetup.Name;
