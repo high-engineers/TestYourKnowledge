@@ -5,38 +5,20 @@ namespace TestYourKnowledge.ViewModels
 {
     internal class UserSetupViewModel : BaseViewModel
     {
-        private string _name;
         public string Name
         {
-            get => _name;
+            get => ApplicationViewModel.Instance.Name;
             set
             {
-                _name = value;
+                ApplicationViewModel.Instance.Name = value;
                 OnPropertyChanged(nameof(Name));
             }
         }
 
-        public ICommand MainMenuCommand { get; set; }
-        public ICommand PlayCommand { get; set; }
+        public ICommand MainMenuCommand { get; set; } = new RelayCommand(() =>
+            ApplicationViewModel.Instance.CurrentPage = AppPage.MainMenu);
 
-        public void GoToMainMenu()
-        {
-            ApplicationViewModel.Instance.CurrentPage = AppPage.MainMenu;
-        }
-
-        public void Play()
-        {
-            ApplicationViewModel.Instance.UserSetup = new UserSetupModel
-            {
-                Name = Name
-            };
-            ApplicationViewModel.Instance.CurrentPage = AppPage.Game;
-        }
-        public UserSetupViewModel()
-        {
-            MainMenuCommand = new RelayCommand(GoToMainMenu);
-            PlayCommand = new RelayCommand(Play);
-        }
-        //TODO: set clock? difficulty?
+        public ICommand PlayCommand { get; set; } = new RelayCommand(() =>
+            ApplicationViewModel.Instance.CurrentPage = AppPage.Game);
     }
 }

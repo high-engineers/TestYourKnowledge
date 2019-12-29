@@ -7,13 +7,12 @@ namespace TestYourKnowledge.ViewModels
 {
     internal class SumUpViewModel : BaseViewModel
     {
-        private string _name;
         public string Name
         {
-            get => _name ?? string.Empty;
+            get => ApplicationViewModel.Instance.Name ?? string.Empty;
             set
             {
-                _name = value;
+                ApplicationViewModel.Instance.Name = value;
                 OnPropertyChanged(nameof(Name));
             }
         }
@@ -29,22 +28,20 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
-        private int _level;
-        public int Level
+        public ICommand MainMenuCommand { get; set; }
+
+        public ICommand PlayAgainCommand { get; set; } = new RelayCommand(() =>
+                ApplicationViewModel.Instance.CurrentPage = AppPage.Game);
+
+        public SumUpViewModel()
         {
-            get => _level;
-            set
-            {
-                _level = value;
-                OnPropertyChanged(nameof(Level));
-            }
+            MainMenuCommand = new RelayCommand(GoToMainMenu);
+            TimeFromStart = ApplicationViewModel.Instance.TimeStart.GetSecondsDifferenceFromNow();
         }
 
-        public ICommand MainMenuCommand { get; set; }
-        public ICommand PlayAgainCommand { get; set; }
         public void GoToMainMenu()
         {
-            SaveToFile("Leaderboard.csv");
+            SaveToFile(ApplicationViewModel.LeaderboardPath);
             ApplicationViewModel.Instance.CurrentPage = AppPage.MainMenu;
         }
 
@@ -53,27 +50,12 @@ namespace TestYourKnowledge.ViewModels
             var playerResult = new PlayerResultModel
             {
                 Name = Name,
-                Level = Level,
                 TimeResult = TimeFromStart
             };
             using (var writer = new StreamWriter(path, true))
             {
-                writer.WriteLine($"{playerResult.Name};{playerResult.TimeResult};{playerResult.Level}");
+                writer.WriteLine($"{playerResult.Name};{playerResult.TimeResult}");
             }
-        }
-
-        public void PlayAgain()
-        {
-            ApplicationViewModel.Instance.CurrentPage = AppPage.Game;
-        }
-
-        public SumUpViewModel()
-        {
-            MainMenuCommand = new RelayCommand(GoToMainMenu);
-            PlayAgainCommand = new RelayCommand(PlayAgain);
-            TimeFromStart = ApplicationViewModel.Instance.Game.TimeStart.GetSecondsDifferenceFromNow();
-            Level = ApplicationViewModel.Instance.Game.LevelAchieved;
-            Name = ApplicationViewModel.Instance.UserSetup.Name;
         }
     }
 }

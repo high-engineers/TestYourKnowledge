@@ -15,10 +15,9 @@
                   FontSize="20">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="No" DisplayMemberBinding="{Binding Number}" Width="50"/>
+                    <GridViewColumn Header="No." DisplayMemberBinding="{Binding No}" Width="50"/>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="220"/>
                     <GridViewColumn Header="Time" DisplayMemberBinding="{Binding TimeResult}" Width="100"/>
-                    <GridViewColumn Header="Level" DisplayMemberBinding="{Binding Level}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>
