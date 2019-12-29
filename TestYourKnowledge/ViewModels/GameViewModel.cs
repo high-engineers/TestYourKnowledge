@@ -7,25 +7,26 @@ namespace TestYourKnowledge.ViewModels
 {
     internal class GameViewModel : BaseViewModel
     {
-        public int LevelAchieved { get; set; } = 0;
         public bool GameEnded { get; set; }
-        public static string Name { get; set; }
 
-        private const double TimeLevelMultiplier = 0.9;
-        private const int MaxLevel = 2;
-
-        private double _timePerAnswer = 3;
-        private DateTime _currentAnswerTimeStart;
-        private int _correctLevelAnswers = 0;
-
-        private int _timeLeft;
-        public int TimeLeft
+        public string Name
         {
-            get => _timeLeft;
+            get => ApplicationViewModel.Instance.Name;
             set
             {
-                _timeLeft = value;
-                OnPropertyChanged(nameof(TimeLeft));
+                ApplicationViewModel.Instance.Name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
+
+        private int _timeFromStart;
+        public int TimeFromStart
+        {
+            get => _timeFromStart;
+            set
+            {
+                _timeFromStart = value;
+                OnPropertyChanged(nameof(TimeFromStart));
             }
         }
 
@@ -40,48 +41,23 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
-        public bool EndGame()
+        public GameViewModel()
         {
-            SumUp();
-            return true;
+            ApplicationViewModel.Instance.TimeStart = DateTime.Now;
+            UpdateGameStatus();
         }
 
         public void UpdateGameStatus()
         {
-            _currentAnswerTimeStart = DateTime.Now;
             Task.Run(() =>
             {
                 while (!GameEnded)
                 {
-                    TimeLeft = Convert.ToInt32(_timePerAnswer - _currentAnswerTimeStart.GetSecondsDifferenceFromNow()); 
-                    if (TimeLeft <= 0)
-                    {
-                        GameEnded = true;
-                        EndGame();
-                    }
+                    TimeFromStart = ApplicationViewModel.Instance.TimeStart.GetSecondsDifferenceFromNow();
                 }
-                EndGame();
+
+                ApplicationViewModel.Instance.CurrentPage = AppPage.SumUp;
             });
-        }
-
-        public void SumUp()
-        {
-            ApplicationViewModel.Instance.Game.LevelAchieved = Level;
-            ApplicationViewModel.Instance.CurrentPage = AppPage.SumUp;
-        }
-
-        public GameViewModel()
-        {
-            var now = DateTime.Now;
-
-            GameEnded = false;
-            LevelAchieved = 0;
-            Name = ApplicationViewModel.Instance.UserSetup.Name;
-            ApplicationViewModel.Instance.Game = new GameModel
-            {
-                TimeStart = now
-            };
-            UpdateGameStatus();
         }
     }
 }

@@ -14,7 +14,7 @@
                 <TextBox Text="{Binding Name}" Width="250"/>
             </StackPanel>
 
-            <Button Content="Play!" Command="{Binding PlayCommand}"/>
+            <Button Content="Play!" Command="{Binding PlayCommand}" Height="50"/>
             <Button Content="Main Menu" Command="{Binding MainMenuCommand}" Height="50"/>
         </StackPanel>
     </Grid>

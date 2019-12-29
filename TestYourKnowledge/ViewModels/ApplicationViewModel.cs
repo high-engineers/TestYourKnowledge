@@ -1,9 +1,12 @@
-﻿using TestYourKnowledge.Models;
+﻿using System;
+using TestYourKnowledge.Models;
 
 namespace TestYourKnowledge.ViewModels
 {
     internal class ApplicationViewModel : BaseViewModel
     {
+        public static string LeaderboardPath = "Leaderboard.csv";
+
         private AppPage _currentPage = AppPage.MainMenu;
         public AppPage CurrentPage
         {
@@ -15,25 +18,25 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
-        private UserSetupModel _userSetup = null;
-        public UserSetupModel UserSetup
+        private string _name;
+        public string Name
         {
-            get => _userSetup;
+            get => _name;
             set
             {
-                _userSetup = value;
-                OnPropertyChanged(nameof(UserSetup));
+                _name = value;
+                OnPropertyChanged(nameof(Name));
             }
         }
 
-        private GameModel _game = null;
-        public GameModel Game
+        private DateTime _timeStart;
+        public DateTime TimeStart
         {
-            get => _game;
+            get => _timeStart;
             set
             {
-                _game = value;
-                OnPropertyChanged(nameof(Game));
+                _timeStart = value;
+                OnPropertyChanged(nameof(TimeStart));
             }
         }
 

@@ -8,7 +8,7 @@ namespace TestYourKnowledge.ViewModels
 {
     internal class LeaderboardViewModel : BaseViewModel
     {
-        private List<ResultLeaderboardModel> _top10;
+        private List<ResultLeaderboardModel> _top10 = new List<ResultLeaderboardModel>();
         public List<ResultLeaderboardModel> Top10
         {
             get => _top10;
@@ -17,6 +17,14 @@ namespace TestYourKnowledge.ViewModels
                 _top10 = value;
                 OnPropertyChanged(nameof(Top10));
             }
+        }
+
+        public ICommand MainMenuCommand { get; set; } = new RelayCommand(() =>
+                 ApplicationViewModel.Instance.CurrentPage = AppPage.MainMenu);
+
+        public LeaderboardViewModel()
+        {
+            LoadFromFile(ApplicationViewModel.LeaderboardPath);
         }
 
         public void LoadFromFile(string path)
@@ -30,42 +38,21 @@ namespace TestYourKnowledge.ViewModels
                     playerResults.Add(new PlayerResultModel
                     {
                         Name = playerResult[0],
-                        TimeResult = int.Parse(playerResult[1]),
-                        Level = int.Parse(playerResult[2]),
+                        TimeResult = int.Parse(playerResult[1])
                     });
                 }
 
-                var orderedPlayerResults = playerResults
-                    .OrderByDescending(x => x.Level)
-                    .ThenBy(x => x.TimeResult)
+                var i = 1;
+                Top10 = playerResults
+                    .OrderBy(x => x.TimeResult)
                     .Take(10)
-                    .ToList();
-
-                foreach (var item in orderedPlayerResults.Select((value, i) => new { i, value }))
-                {
-                    Top10.Add(new ResultLeaderboardModel
+                    .Select(x => new ResultLeaderboardModel
                     {
-                        Number = item.i + 1,
-                        Name = item.value.Name,
-                        Level = item.value.Level,
-                        TimeResult = item.value.TimeResult
-                    });
-                };
+                        No = i++,
+                        Name = x.Name,
+                        TimeResult = x.TimeResult
+                    }).ToList();
             }
-        }
-
-        public void GoToMainMenu()
-        {
-            ApplicationViewModel.Instance.CurrentPage = AppPage.MainMenu;
-        }
-
-        public ICommand MainMenuCommand { get; set; }
-
-        public LeaderboardViewModel()
-        {
-            MainMenuCommand = new RelayCommand(GoToMainMenu);
-            Top10 = new List<ResultLeaderboardModel>();
-            LoadFromFile("Leaderboard.csv");
         }
     }
 }
