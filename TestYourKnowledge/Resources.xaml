@@ -28,11 +28,9 @@
     </Style>
 
     <Style TargetType="{x:Type Image}">
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="10"/>
-        <Setter Property="Height" Value="45"/>
-        <Setter Property="Width" Value="45"/>
+        <Setter Property="Height" Value="267"/>
+        <Setter Property="Width" Value="400"/>
     </Style>
 
     <Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlock">
