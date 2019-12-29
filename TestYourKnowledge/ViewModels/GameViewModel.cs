@@ -7,15 +7,14 @@ namespace TestYourKnowledge.ViewModels
 {
     internal class GameViewModel : BaseViewModel
     {
-        public static int LevelAchieved { get; set; } = 0;
-        public static bool GameEnded { get; set; }
-        public static bool CorrectDomino { get; set; }
+        public int LevelAchieved { get; set; } = 0;
+        public bool GameEnded { get; set; }
         public static string Name { get; set; }
 
         private const double TimeLevelMultiplier = 0.9;
         private const int MaxLevel = 2;
 
-        private double _timePerAnswer = 10;
+        private double _timePerAnswer = 3;
         private DateTime _currentAnswerTimeStart;
         private int _correctLevelAnswers = 0;
 
@@ -63,12 +62,6 @@ namespace TestYourKnowledge.ViewModels
                 }
                 EndGame();
             });
-        }
-
-        public void GoToMainMenu()
-        {
-            ApplicationViewModel.Instance.CurrentPage = AppPage.MainMenu;
-            GameEnded = true;
         }
 
         public void SumUp()
