@@ -1,8 +1,7 @@
-﻿using TestYourKnowledge.Models;
-using System;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Input;
 using TestYourKnowledge.Extensions;
+using TestYourKnowledge.Models;
 
 namespace TestYourKnowledge.ViewModels
 {
@@ -61,7 +60,6 @@ namespace TestYourKnowledge.ViewModels
             {
                 writer.WriteLine($"{playerResult.Name};{playerResult.TimeResult};{playerResult.Level}");
             }
-            GameViewModel.GameEnded = false;
         }
 
         public void PlayAgain()
