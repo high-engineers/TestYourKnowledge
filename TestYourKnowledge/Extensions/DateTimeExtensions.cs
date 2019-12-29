@@ -9,10 +9,10 @@ namespace TestYourKnowledge.Extensions
             return Math.Round((greater - less).TotalSeconds);
         }
 
-        public static double GetSecondsDifferenceFromNow(this DateTime dateTime)
+        public static int GetSecondsDifferenceFromNow(this DateTime dateTime)
         {
             var now = DateTime.Now;
-            return GetSecondsDifference(now, dateTime);
+            return Convert.ToInt32(GetSecondsDifference(now, dateTime));
         }
     }
 }

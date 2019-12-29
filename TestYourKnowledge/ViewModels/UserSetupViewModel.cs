@@ -16,8 +16,6 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
-        public static string ConfirmedName;
-
         public ICommand MainMenuCommand { get; set; }
         public ICommand PlayCommand { get; set; }
 

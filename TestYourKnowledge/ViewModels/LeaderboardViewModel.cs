@@ -1,15 +1,15 @@
-﻿using TestYourKnowledge.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
+using TestYourKnowledge.Models;
 
 namespace TestYourKnowledge.ViewModels
 {
     internal class LeaderboardViewModel : BaseViewModel
     {
-        private List<PlayerModel> _top10;
-        public List<PlayerModel> Top10
+        private List<ResultLeaderboardModel> _top10;
+        public List<ResultLeaderboardModel> Top10
         {
             get => _top10;
             set
@@ -23,18 +23,34 @@ namespace TestYourKnowledge.ViewModels
         {
             using (var reader = new StreamReader(path))
             {
-                reader.ReadLine();
-                var people = new List<PlayerModel>();
+                var playerResults = new List<PlayerResultModel>();
                 while (!reader.EndOfStream)
                 {
-                    var person = reader.ReadLine().Split(';');
-                    people.Add(new PlayerModel(person[0], int.Parse(person[1]), int.Parse(person[2])));
+                    var playerResult = reader.ReadLine().Split(';');
+                    playerResults.Add(new PlayerResultModel
+                    {
+                        Name = playerResult[0],
+                        TimeResult = int.Parse(playerResult[1]),
+                        Level = int.Parse(playerResult[2]),
+                    });
                 }
-                var peopleInOrder = people.OrderByDescending(x => x.Level).ThenBy(x => x.TimeStart).ToList();
-                for (int i = 0; i < (peopleInOrder.Count < 10 ? peopleInOrder.Count : 10); i++)
+
+                var orderedPlayerResults = playerResults
+                    .OrderByDescending(x => x.Level)
+                    .ThenBy(x => x.TimeResult)
+                    .Take(10)
+                    .ToList();
+
+                foreach (var item in orderedPlayerResults.Select((value, i) => new { i, value }))
                 {
-                    Top10.Add(peopleInOrder[i]);
-                }
+                    Top10.Add(new ResultLeaderboardModel
+                    {
+                        Number = item.i + 1,
+                        Name = item.value.Name,
+                        Level = item.value.Level,
+                        TimeResult = item.value.TimeResult
+                    });
+                };
             }
         }
 
@@ -48,7 +64,7 @@ namespace TestYourKnowledge.ViewModels
         public LeaderboardViewModel()
         {
             MainMenuCommand = new RelayCommand(GoToMainMenu);
-            Top10 = new List<PlayerModel>();
+            Top10 = new List<ResultLeaderboardModel>();
             LoadFromFile("Leaderboard.csv");
         }
     }
