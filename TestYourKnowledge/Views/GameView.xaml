@@ -9,16 +9,54 @@
     <Grid Background="{StaticResource BackgroundDarkColorBrush}">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
+        <StackPanel HorizontalAlignment="Center" Grid.Row="0">
             <StackPanel Orientation="Horizontal" Margin="20" HorizontalAlignment="Center">
                 <TextBlock Style="{StaticResource BaseTextBlock}" Text="{Binding Name}" Width="400"/>
                 <TextBlock Text="{Binding TimeFromStart}" Style="{StaticResource BaseTextBlock}"/>
             </StackPanel>
         </StackPanel>
+
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <WrapPanel Grid.Column="0">
+                <ItemsControl ItemsSource="{Binding Images}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Image x:Name="a" Source="{Binding Path}"/>
+                                <Border Width="400"
+                                        Height="39"
+                                        BorderBrush="White"
+                                        BorderThickness="2">
+                                </Border>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </WrapPanel>
+
+            <StackPanel Grid.Column="1">
+                <ItemsControl ItemsSource="{Binding Sounds}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding No}"
+                                    Margin="8"
+                                    Height="34"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            
+        </Grid>
 
     </Grid>
 </Page>

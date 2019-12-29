@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TestYourKnowledge.Extensions;
 using TestYourKnowledge.Models;
@@ -41,10 +42,70 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
+        private List<Resource> _images = new List<Resource>();
+        public List<Resource> Images
+        {
+            get => _images;
+            set
+            {
+                _images = value;
+                OnPropertyChanged(nameof(Images));
+            }
+        }
+
+        private List<Resource> _sounds = new List<Resource>();
+        public List<Resource> Sounds
+        {
+            get => _sounds;
+            set
+            {
+                _sounds = value;
+                OnPropertyChanged(nameof(Sounds));
+            }
+        }
+
         public GameViewModel()
         {
             ApplicationViewModel.Instance.TimeStart = DateTime.Now;
             UpdateGameStatus();
+            //TODO: Load resources properly
+            Sounds.AddRange(new List<Resource>
+            {
+                new Resource
+                {
+                    No = 1,
+                    Path = "Resources/1/do not like.m4a"
+                },
+                new Resource
+                {
+                    No = 2,
+                    Path = "Resources/2/book.m4a"
+                },
+                new Resource
+                {
+                    No = 3,
+                    Path = "Resources/3/you.m4a"
+                }
+            });
+
+            Images.AddRange(new List<Resource>
+            {
+                new Resource
+                {
+                    No = 1,
+                    Path = "Resources/1/do not like.png"
+                },
+                new Resource
+                {
+                    No = 2,
+                    Path = "Resources/2/book.jpg"
+                },
+                new Resource
+                {
+                    No = 3,
+                    Path = "Resources/3/you.jpg"
+                }
+            });
         }
 
         public void UpdateGameStatus()
