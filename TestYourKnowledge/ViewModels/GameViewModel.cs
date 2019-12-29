@@ -1,26 +1,20 @@
-﻿using TestYourKnowledge.Models;
-using System;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using TestYourKnowledge.Models;
 
 namespace TestYourKnowledge.ViewModels
 {
     internal class GameViewModel : BaseViewModel
     {
-        public static DateTime TimeStart { get; set; }
         public static int LevelAchieved { get; set; } = 0;
         public static bool GameEnded { get; set; }
         public static bool CorrectDomino { get; set; }
         public static string Name { get; set; }
 
-        //public PlayerModel Person { get; set; }
-
-
         private const double TimeLevelMultiplier = 0.9;
         private const int MaxLevel = 2;
 
-        private double _timePerAnswer = 30;
+        private double _timePerAnswer = 1;
         private DateTime _currentAnswerTimeStart;
         private int _correctLevelAnswers = 0;
 
@@ -46,15 +40,11 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
-        private string _name;
-
-
         public bool EndGame()
         {
             SumUp();
             return true;
         }
-
 
         public void UpdateGameStatus()
         {
@@ -76,25 +66,27 @@ namespace TestYourKnowledge.ViewModels
 
         public void GoToMainMenu()
         {
-            GameEnded = true;
             ApplicationViewModel.Instance.CurrentPage = AppPage.MainMenu;
+            GameEnded = true;
         }
 
         public void SumUp()
         {
-            LevelAchieved = Level;
+            ApplicationViewModel.Instance.Game.LevelAchieved = Level;
             ApplicationViewModel.Instance.CurrentPage = AppPage.SumUp;
         }
 
-        public ICommand MainMenuCommand { get; set; }
-
         public GameViewModel()
         {
-            MainMenuCommand = new RelayCommand(GoToMainMenu);
+            var now = DateTime.Now;
+
             GameEnded = false;
             LevelAchieved = 0;
-            TimeStart = DateTime.Now;
-            Name = UserSetupViewModel.ConfirmedName;
+            Name = ApplicationViewModel.Instance.UserSetup.Name;
+            ApplicationViewModel.Instance.Game = new GameModel
+            {
+                TimeStart = now
+            };
             UpdateGameStatus();
         }
     }

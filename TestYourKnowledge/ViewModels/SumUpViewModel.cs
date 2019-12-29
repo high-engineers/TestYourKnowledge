@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Windows.Input;
+using TestYourKnowledge.Extensions;
 
 namespace TestYourKnowledge.ViewModels
 {
@@ -10,7 +11,7 @@ namespace TestYourKnowledge.ViewModels
         private string _name;
         public string Name
         {
-            get => _name;
+            get => _name ?? string.Empty;
             set
             {
                 _name = value;
@@ -41,7 +42,7 @@ namespace TestYourKnowledge.ViewModels
         }
 
         public ICommand MainMenuCommand { get; set; }
-
+        public ICommand PlayAgainCommand { get; set; }
         public void GoToMainMenu()
         {
             SaveToFile("Leaderboard.csv");
@@ -58,11 +59,19 @@ namespace TestYourKnowledge.ViewModels
             GameViewModel.GameEnded = false;
         }
 
+        public void PlayAgain()
+        {
+            ApplicationViewModel.Instance.CurrentPage = AppPage.Game;
+        }
+
         public SumUpViewModel()
         {
             MainMenuCommand = new RelayCommand(GoToMainMenu);
-            TimeFromStart = Math.Round((DateTime.Now - GameViewModel.TimeStart).TotalSeconds);
-            Level = GameViewModel.LevelAchieved;
+            PlayAgainCommand = new RelayCommand(PlayAgain);
+            //get from now ext
+            TimeFromStart = ApplicationViewModel.Instance.Game.TimeStart.GetSecondsDifferenceFromNow();
+            Level = ApplicationViewModel.Instance.Game.LevelAchieved;
+            Name = ApplicationViewModel.Instance.UserSetup.Name;
         }
     }
 }

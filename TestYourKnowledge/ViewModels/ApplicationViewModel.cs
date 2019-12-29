@@ -15,6 +15,29 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
+        private UserSetupModel _userSetup = null;
+        public UserSetupModel UserSetup
+        {
+            get => _userSetup;
+            set
+            {
+                _userSetup = value;
+                OnPropertyChanged(nameof(UserSetup));
+            }
+        }
+
+        private GameModel _game = null;
+        public GameModel Game
+        {
+            get => _game;
+            set
+            {
+                _game = value;
+                OnPropertyChanged(nameof(Game));
+            }
+        }
+
+        #region Instances
         private static ApplicationViewModel _instance;
         public static ApplicationViewModel Instance
         {
@@ -28,5 +51,6 @@ namespace TestYourKnowledge.ViewModels
             }
             set => _instance = value;
         }
+        #endregion
     }
 }

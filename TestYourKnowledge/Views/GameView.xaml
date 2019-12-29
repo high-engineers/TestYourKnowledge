@@ -14,8 +14,6 @@
                 <TextBlock Style="{StaticResource BaseTextBlock}" Text="{Binding Name}" Width="400"/>
                 <TextBlock Text="{Binding TimeLeft}" Style="{StaticResource BaseTextBlock}"/>
             </StackPanel>
-            <Button Content="Main Menu" Command="{Binding MainMenuCommand}" Height="30" VerticalAlignment="Bottom"/>
-
         </StackPanel>
 
     </Grid>
