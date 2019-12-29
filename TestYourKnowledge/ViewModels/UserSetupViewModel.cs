@@ -28,7 +28,10 @@ namespace TestYourKnowledge.ViewModels
 
         public void Play()
         {
-            ConfirmedName = Name;
+            ApplicationViewModel.Instance.UserSetup = new UserSetupModel
+            {
+                Name = Name
+            };
             ApplicationViewModel.Instance.CurrentPage = AppPage.Game;
         }
         public UserSetupViewModel()

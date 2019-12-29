@@ -19,8 +19,8 @@ namespace TestYourKnowledge
                     return new LeaderboardView();
                 case AppPage.MainMenu:
                     return new MainMenuView();
-                //case AppPage.SumUp:
-                //    return new SumUpV();
+                case AppPage.SumUp:
+                    return new SumUpView();
                 case AppPage.UserSetup:
                     return new UserSetupView();
                 default:
