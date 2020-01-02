@@ -12,7 +12,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <StackPanel HorizontalAlignment="Center" Grid.Row="0">
             <StackPanel Orientation="Horizontal" Margin="20" HorizontalAlignment="Center">
                 <TextBlock Style="{StaticResource BaseTextBlock}" Text="{Binding Name}" Width="400"/>
@@ -26,23 +26,32 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
-            <WrapPanel Grid.Column="0">
-                <ItemsControl ItemsSource="{Binding Images}">
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl Grid.Column="0" 
+                              ItemsSource="{Binding Images}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <Image x:Name="a" Source="{Binding Path}"/>
+                                <Image Source="{Binding Path}"/>
                                 <Border Width="400"
                                         Height="39"
                                         BorderBrush="White"
-                                        BorderThickness="2">
+                                        BorderThickness="2"
+                                        AllowDrop="True"
+                                        Drop="Sound_Drop"
+                                        Background="Transparent">
                                 </Border>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
                 </ItemsControl>
-            </WrapPanel>
+            </ScrollViewer>
 
             <StackPanel Grid.Column="1">
                 <ItemsControl ItemsSource="{Binding Sounds}">
@@ -50,12 +59,14 @@
                         <DataTemplate>
                             <Button Content="{Binding No}"
                                     Margin="8"
-                                    Height="34"/>
+                                    Height="34"
+                                    MaxWidth="390"
+                                    PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
-            
+
         </Grid>
 
     </Grid>

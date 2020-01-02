@@ -16,10 +16,15 @@ namespace TestYourKnowledge.Views
             DataContext = new GameViewModel();
         }
 
-        private void DominoUserControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Sound_Drop(object sender, DragEventArgs e)
         {
-            var userControl = sender as UserControl;
-            DragDrop.DoDragDrop(userControl, userControl.DataContext, DragDropEffects.All);
+
+        }
+
+        private void Button_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var button = sender as Button;
+            DragDrop.DoDragDrop(button, button.DataContext, DragDropEffects.All);
         }
     }
 }

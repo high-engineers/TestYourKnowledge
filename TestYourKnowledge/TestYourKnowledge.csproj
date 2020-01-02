@@ -149,44 +149,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\10\dog.jpg" />
-    <Content Include="Resources\10\dog.m4a" />
-    <Resource Include="Resources\11\fruit.jpg" />
-    <Content Include="Resources\11\fruit.m4a" />
-    <Resource Include="Resources\12\cat.jpg" />
-    <Content Include="Resources\12\cat.m4a" />
-    <Content Include="Resources\13\computer.m4a" />
-    <Resource Include="Resources\13\computer.png" />
-    <Resource Include="Resources\14\rice.jpg" />
-    <Content Include="Resources\14\rice.m4a" />
-    <Resource Include="Resources\15\teacher.jpg" />
-    <Content Include="Resources\15\teacher.m4a" />
-    <Resource Include="Resources\16\apple.jpg" />
-    <Content Include="Resources\16\apple.m4a" />
-    <Resource Include="Resources\17\tea.jpg" />
-    <Content Include="Resources\17\tea.m4a" />
-    <Resource Include="Resources\18\vegetables.jpg" />
-    <Content Include="Resources\18\vegetables.m4a" />
-    <Resource Include="Resources\19\money.jpg" />
-    <Content Include="Resources\19\money.m4a" />
-    <Content Include="Resources\1\do not like.m4a" />
-    <Resource Include="Resources\1\do not like.png" />
-    <Resource Include="Resources\2\book.jpg" />
-    <Content Include="Resources\2\book.m4a" />
-    <Resource Include="Resources\3\you.jpg" />
-    <Content Include="Resources\3\you.m4a" />
-    <Resource Include="Resources\4\doctor.jpg" />
-    <Content Include="Resources\4\doctor.m4a" />
-    <Content Include="Resources\5\and.m4a" />
-    <Resource Include="Resources\5\and.png" />
-    <Content Include="Resources\6\like.m4a" />
-    <Resource Include="Resources\6\like.png" />
-    <Resource Include="Resources\7\student.jpg" />
-    <Content Include="Resources\7\student.m4a" />
-    <Resource Include="Resources\8\I.jpg" />
-    <Content Include="Resources\8\I.m4a" />
-    <Resource Include="Resources\9\water.jpg" />
-    <Content Include="Resources\9\water.m4a" />
+    <Resource Include="Resources\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Resources\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

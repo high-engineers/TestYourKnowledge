@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Media;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using TestYourKnowledge.Extensions;
 using TestYourKnowledge.Models;
 
@@ -74,17 +78,17 @@ namespace TestYourKnowledge.ViewModels
                 new Resource
                 {
                     No = 1,
-                    Path = "Resources/1/do not like.m4a"
+                    Path = "\\Resources\\1\\do not like.m4a"
                 },
                 new Resource
                 {
                     No = 2,
-                    Path = "Resources/2/book.m4a"
+                    Path = "\\Resources\\2\\book.m4a"
                 },
                 new Resource
                 {
                     No = 3,
-                    Path = "Resources/3/you.m4a"
+                    Path = "\\Resources\\3\\you.m4a"
                 }
             });
 
@@ -93,17 +97,17 @@ namespace TestYourKnowledge.ViewModels
                 new Resource
                 {
                     No = 1,
-                    Path = "Resources/1/do not like.png"
+                    Path = "\\Resources\\1\\do not like.png"
                 },
                 new Resource
                 {
                     No = 2,
-                    Path = "Resources/2/book.jpg"
+                    Path = "\\Resources\\2\\book.jpg"
                 },
                 new Resource
                 {
                     No = 3,
-                    Path = "Resources/3/you.jpg"
+                    Path = "\\Resources\\3\\you.jpg"
                 }
             });
         }
