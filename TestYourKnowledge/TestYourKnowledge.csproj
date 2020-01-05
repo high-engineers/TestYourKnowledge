@@ -58,6 +58,7 @@
     <Compile Include="BoolToVisibilityConverter.cs" />
     <Compile Include="EnumToPageConverter.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\ResourceExtensions.cs" />
     <Compile Include="Models\AppPage.cs" />
     <Compile Include="Models\PlayerResultModel.cs" />
