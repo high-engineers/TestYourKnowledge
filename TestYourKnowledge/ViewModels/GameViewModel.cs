@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Media;
 using System.Threading.Tasks;
-using System.Windows.Media;
 using TestYourKnowledge.Extensions;
 using TestYourKnowledge.Models;
 
@@ -35,17 +32,6 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
-        private int _level = 1;
-        public int Level
-        {
-            get => _level;
-            set
-            {
-                _level = value;
-                OnPropertyChanged(nameof(Level));
-            }
-        }
-
         private List<Resource> _images = new List<Resource>();
         public List<Resource> Images
         {
@@ -71,45 +57,8 @@ namespace TestYourKnowledge.ViewModels
         public GameViewModel()
         {
             ApplicationViewModel.Instance.TimeStart = DateTime.Now;
+            LoadResources();
             UpdateGameStatus();
-            //TODO: Load resources properly
-            Sounds.AddRange(new List<Resource>
-            {
-                new Resource
-                {
-                    No = 1,
-                    Path = "\\Resources\\1\\do not like.m4a"
-                },
-                new Resource
-                {
-                    No = 2,
-                    Path = "\\Resources\\2\\book.m4a"
-                },
-                new Resource
-                {
-                    No = 3,
-                    Path = "\\Resources\\3\\you.m4a"
-                }
-            });
-
-            Images.AddRange(new List<Resource>
-            {
-                new Resource
-                {
-                    No = 1,
-                    Path = "\\Resources\\1\\do not like.png"
-                },
-                new Resource
-                {
-                    No = 2,
-                    Path = "\\Resources\\2\\book.jpg"
-                },
-                new Resource
-                {
-                    No = 3,
-                    Path = "\\Resources\\3\\you.jpg"
-                }
-            });
         }
 
         public void UpdateGameStatus()
@@ -123,6 +72,56 @@ namespace TestYourKnowledge.ViewModels
 
                 ApplicationViewModel.Instance.CurrentPage = AppPage.SumUp;
             });
+        }
+
+        private void LoadResources()
+        {
+            int noCounter = 1;
+            while (true)
+            {
+                string path = @"Resources\" + noCounter.ToString();
+                if (Directory.Exists(path))
+                {
+                    var filePaths = Directory.GetFiles(path);
+                    if (filePaths.Length != 2)
+                    {
+                        //TODO: notify user that something is wrong in folder number {i}?
+                    }
+                    else
+                    {
+                        var firstResource = new Resource
+                        {
+                            No = noCounter,
+                            Path = @"\" + filePaths[0]
+                        };
+                        var secondResource = new Resource
+                        {
+                            No = noCounter,
+                            Path = @"\" + filePaths[1]
+                        };
+
+                        //one and only acceptable situation is two files per subfolder
+                        //one resource is sound, one resource is image
+                        //if any other situation - do not add any image or sound - kinda transactional
+                        if (firstResource.IsSound() && secondResource.IsImage())
+                        {
+                            Sounds.Add(firstResource);
+                            Images.Add(secondResource);
+                        }
+                        else if (firstResource.IsImage() && secondResource.IsSound())
+                        {
+                            Images.Add(firstResource);
+                            Sounds.Add(secondResource);
+                        }
+                    }
+                    noCounter++;
+                }
+                //if there is subfolder missing which breakes the number ordering it will stop and add only resources before missing subfolder
+                else
+                {
+                    break;
+                }
+            }
         }
     }
 }
