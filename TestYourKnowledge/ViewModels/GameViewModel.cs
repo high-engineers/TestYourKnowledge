@@ -122,6 +122,9 @@ namespace TestYourKnowledge.ViewModels
                     break;
                 }
             }
+
+            Sounds = Sounds.Shuffle();
+            Images = Images.Shuffle();
         }
     }
 }
