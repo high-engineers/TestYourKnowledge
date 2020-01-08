@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows.Media;
 using TestYourKnowledge.Extensions;
 using TestYourKnowledge.Models;
+
 
 namespace TestYourKnowledge.ViewModels
 {
     internal class GameViewModel : BaseViewModel
     {
         public bool GameEnded { get; set; }
-
+        private MediaPlayer _player = new MediaPlayer();
         public string Name
         {
             get => ApplicationViewModel.Instance.Name;
@@ -59,6 +62,7 @@ namespace TestYourKnowledge.ViewModels
             ApplicationViewModel.Instance.TimeStart = DateTime.Now;
             LoadResources();
             UpdateGameStatus();
+            PlaySoundCommand = new RelayCommand<string>(PlaySound);
         }
 
         public void UpdateGameStatus()
@@ -69,7 +73,7 @@ namespace TestYourKnowledge.ViewModels
                 {
                     TimeFromStart = ApplicationViewModel.Instance.TimeStart.GetSecondsDifferenceFromNow();
                 }
-
+                _player.Close();
                 ApplicationViewModel.Instance.CurrentPage = AppPage.SumUp;
             });
         }
@@ -124,7 +128,20 @@ namespace TestYourKnowledge.ViewModels
             }
 
             Sounds = Sounds.Shuffle();
+            for (int i = 0; i < Sounds.Count; i++)
+            {
+                Sounds[i].Index = i+1;
+            }
             Images = Images.Shuffle();
         }
+
+        public ICommand PlaySoundCommand { get; set; }
+
+        private void PlaySound(string pathToSound)
+        {
+            _player.Open(new Uri(Directory.GetCurrentDirectory() + pathToSound));
+            _player.Play();
+        }
+
     }
 }

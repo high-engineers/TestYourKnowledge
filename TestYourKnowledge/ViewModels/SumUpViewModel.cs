@@ -30,16 +30,16 @@ namespace TestYourKnowledge.ViewModels
 
         public ICommand MainMenuCommand { get; set; }
 
-        public ICommand PlayAgainCommand { get; set; } = new RelayCommand(() =>
+        public ICommand PlayAgainCommand { get; set; } = new RelayCommand<object>((x) =>
                 ApplicationViewModel.Instance.CurrentPage = AppPage.Game);
 
         public SumUpViewModel()
         {
-            MainMenuCommand = new RelayCommand(GoToMainMenu);
+            MainMenuCommand = new RelayCommand<object>(GoToMainMenu);
             TimeFromStart = ApplicationViewModel.Instance.TimeStart.GetSecondsDifferenceFromNow();
         }
 
-        public void GoToMainMenu()
+        public void GoToMainMenu(object x)
         {
             SaveToFile(ApplicationViewModel.LeaderboardPath);
             ApplicationViewModel.Instance.CurrentPage = AppPage.MainMenu;
