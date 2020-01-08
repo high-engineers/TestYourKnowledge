@@ -57,11 +57,12 @@
                 <ItemsControl ItemsSource="{Binding Sounds}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding No}"
-                                    Margin="8"
-                                    Height="34"
-                                    MaxWidth="390"
-                                    PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown"/>
+                            <Button Content="{Binding Index}"
+                                Margin="8"
+                                Height="34"
+                                MaxWidth="390"
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=Page, Mode=FindAncestor}, Path=DataContext.PlaySoundCommand }"
+                                CommandParameter="{Binding Path}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

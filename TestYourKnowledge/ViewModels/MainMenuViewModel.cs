@@ -5,10 +5,10 @@ namespace TestYourKnowledge.ViewModels
 {
     internal class MainMenuViewModel : BaseViewModel
     {
-        public ICommand LeaderboardCommand { get; set; } = new RelayCommand(() => 
+        public ICommand LeaderboardCommand { get; set; } = new RelayCommand<object>((x) => 
             ApplicationViewModel.Instance.CurrentPage = AppPage.Leaderboard);
 
-        public ICommand UserSetupCommand { get; set; } = new RelayCommand(() =>
+        public ICommand UserSetupCommand { get; set; } = new RelayCommand<object>((x) =>
             ApplicationViewModel.Instance.CurrentPage = AppPage.UserSetup);
     }
 }

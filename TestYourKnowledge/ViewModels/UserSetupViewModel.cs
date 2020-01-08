@@ -15,10 +15,10 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
-        public ICommand MainMenuCommand { get; set; } = new RelayCommand(() =>
+        public ICommand MainMenuCommand { get; set; } = new RelayCommand<object>((x) =>
             ApplicationViewModel.Instance.CurrentPage = AppPage.MainMenu);
 
-        public ICommand PlayCommand { get; set; } = new RelayCommand(() =>
+        public ICommand PlayCommand { get; set; } = new RelayCommand<object>((x) =>
             ApplicationViewModel.Instance.CurrentPage = AppPage.Game);
     }
 }
