@@ -17,6 +17,7 @@
                 <GridView>
                     <GridViewColumn Header="No." DisplayMemberBinding="{Binding No}" Width="50"/>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="220"/>
+                    <GridViewColumn Header="Score" DisplayMemberBinding="{Binding Score}" Width="100"/>
                     <GridViewColumn Header="Time" DisplayMemberBinding="{Binding TimeResult}" Width="100"/>
                 </GridView>
             </ListView.View>

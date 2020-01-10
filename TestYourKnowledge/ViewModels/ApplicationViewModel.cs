@@ -40,7 +40,18 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
-        #region Instances
+        private int _correctAnswers;
+        public int CorrectAnswers
+        {
+            get => _correctAnswers;
+            set
+            {
+                _correctAnswers = value;
+                OnPropertyChanged(nameof(CorrectAnswers));
+            }
+        }
+
+        #region Instance
         private static ApplicationViewModel _instance;
         public static ApplicationViewModel Instance
         {

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using TestYourKnowledge.Extensions;
@@ -14,6 +16,7 @@ namespace TestYourKnowledge.ViewModels
     {
         public bool GameEnded { get; set; }
         private MediaPlayer _player = new MediaPlayer();
+
         public string Name
         {
             get => ApplicationViewModel.Instance.Name;
@@ -46,8 +49,8 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
-        private List<Resource> _sounds = new List<Resource>();
-        public List<Resource> Sounds
+        private ObservableCollection<Resource> _sounds = new ObservableCollection<Resource>();
+        public ObservableCollection<Resource> Sounds
         {
             get => _sounds;
             set
@@ -60,9 +63,10 @@ namespace TestYourKnowledge.ViewModels
         public GameViewModel()
         {
             ApplicationViewModel.Instance.TimeStart = DateTime.Now;
+            ApplicationViewModel.Instance.CorrectAnswers = 0;
+            PlaySoundCommand = new RelayCommand<string>(PlaySound);
             LoadResources();
             UpdateGameStatus();
-            PlaySoundCommand = new RelayCommand<string>(PlaySound);
         }
 
         public void UpdateGameStatus()
@@ -73,13 +77,14 @@ namespace TestYourKnowledge.ViewModels
                 {
                     TimeFromStart = ApplicationViewModel.Instance.TimeStart.GetSecondsDifferenceFromNow();
                 }
-                _player.Close();
+                Application.Current.Dispatcher.Invoke(() => _player.Close());
                 ApplicationViewModel.Instance.CurrentPage = AppPage.SumUp;
             });
         }
 
         private void LoadResources()
         {
+            var sounds = new List<Resource>();
             int noCounter = 1;
             while (true)
             {
@@ -109,13 +114,13 @@ namespace TestYourKnowledge.ViewModels
                         //if any other situation - do not add any image or sound - kinda transactional
                         if (firstResource.IsSound() && secondResource.IsImage())
                         {
-                            Sounds.Add(firstResource);
+                            sounds.Add(firstResource);
                             Images.Add(secondResource);
                         }
                         else if (firstResource.IsImage() && secondResource.IsSound())
                         {
                             Images.Add(firstResource);
-                            Sounds.Add(secondResource);
+                            sounds.Add(secondResource);
                         }
                     }
                     noCounter++;
@@ -127,10 +132,11 @@ namespace TestYourKnowledge.ViewModels
                 }
             }
 
-            Sounds = Sounds.Shuffle();
-            for (int i = 0; i < Sounds.Count; i++)
+            sounds = sounds.Shuffle();
+            for (int i = 0; i < sounds.Count; i++)
             {
-                Sounds[i].Index = i+1;
+                sounds[i].Index = i+1;
+                Sounds.Add(sounds[i]);
             }
             Images = Images.Shuffle();
         }
@@ -143,5 +149,19 @@ namespace TestYourKnowledge.ViewModels
             _player.Play();
         }
 
+        public void AssignSoundToImage(Resource sound, Resource image)
+        {
+            if (Sounds.Contains(sound) && sound.No == image.No)
+            {
+                ApplicationViewModel.Instance.CorrectAnswers++;
+            }
+
+            Sounds.Remove(sound);
+
+            if (Sounds.Count == 1)
+            {
+                GameEnded = true;
+            }
+        }
     }
 }
