@@ -38,19 +38,22 @@ namespace TestYourKnowledge.ViewModels
                     playerResults.Add(new PlayerResultModel
                     {
                         Name = playerResult[0],
-                        TimeResult = int.Parse(playerResult[1])
+                        TimeResult = int.Parse(playerResult[1]),
+                        Score = int.Parse(playerResult[2])
                     });
                 }
 
                 var i = 1;
                 Top10 = playerResults
-                    .OrderBy(x => x.TimeResult)
+                    .OrderByDescending(x => x.Score)
+                    .ThenBy(x => x.TimeResult)
                     .Take(10)
                     .Select(x => new ResultLeaderboardModel
                     {
                         No = i++,
                         Name = x.Name,
-                        TimeResult = x.TimeResult
+                        TimeResult = x.TimeResult,
+                        Score = x.Score
                     }).ToList();
             }
         }

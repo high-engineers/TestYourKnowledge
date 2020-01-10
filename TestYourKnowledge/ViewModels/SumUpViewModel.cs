@@ -28,6 +28,17 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
+        private int _score;
+        public int Score
+        {
+            get => _score;
+            set
+            {
+                _score = value;
+                OnPropertyChanged(nameof(Score));
+            }
+        }
+
         public ICommand MainMenuCommand { get; set; }
 
         public ICommand PlayAgainCommand { get; set; } = new RelayCommand<object>((x) =>
@@ -37,6 +48,7 @@ namespace TestYourKnowledge.ViewModels
         {
             MainMenuCommand = new RelayCommand<object>(GoToMainMenu);
             TimeFromStart = ApplicationViewModel.Instance.TimeStart.GetSecondsDifferenceFromNow();
+            Score = ApplicationViewModel.Instance.CorrectAnswers + 1;
         }
 
         public void GoToMainMenu(object x)
@@ -50,11 +62,12 @@ namespace TestYourKnowledge.ViewModels
             var playerResult = new PlayerResultModel
             {
                 Name = Name,
-                TimeResult = TimeFromStart
+                TimeResult = TimeFromStart,
+                Score = Score
             };
             using (var writer = new StreamWriter(path, true))
             {
-                writer.WriteLine($"{playerResult.Name};{playerResult.TimeResult}");
+                writer.WriteLine($"{playerResult.Name};{playerResult.TimeResult};{playerResult.Score}");
             }
         }
     }
