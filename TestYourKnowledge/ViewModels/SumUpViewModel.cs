@@ -48,7 +48,7 @@ namespace TestYourKnowledge.ViewModels
         {
             MainMenuCommand = new RelayCommand<object>(GoToMainMenu);
             TimeFromStart = ApplicationViewModel.Instance.TimeStart.GetSecondsDifferenceFromNow();
-            Score = ApplicationViewModel.Instance.CorrectAnswers + 1;
+            Score = ApplicationViewModel.Instance.CorrectAnswers;
         }
 
         public void GoToMainMenu(object x)

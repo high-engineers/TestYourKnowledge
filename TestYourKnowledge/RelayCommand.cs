@@ -6,17 +6,24 @@ namespace TestYourKnowledge
     internal class RelayCommand<T> : ICommand
     {
         private Action<T> _action;
+        private Func<bool> _canExecute;
 
-        public RelayCommand(Action<T> action)
+        public RelayCommand(Action<T> action, Func<bool> canExecute = null)
         {
             _action = action;
+            _canExecute = canExecute;
         }
 
-        public event EventHandler CanExecuteChanged = (sender, e) => { };
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+        }
+
+        public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            return _canExecute == null ? true : _canExecute();
         }
 
         public void Execute(object parameter)

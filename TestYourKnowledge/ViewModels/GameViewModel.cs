@@ -65,6 +65,7 @@ namespace TestYourKnowledge.ViewModels
             ApplicationViewModel.Instance.TimeStart = DateTime.Now;
             ApplicationViewModel.Instance.CorrectAnswers = 0;
             PlaySoundCommand = new RelayCommand<string>(PlaySound);
+            EndTheGameCommand = new RelayCommand<object>(EndTheGame, () => Sounds.Count == 0);
             LoadResources();
             UpdateGameStatus();
         }
@@ -142,6 +143,7 @@ namespace TestYourKnowledge.ViewModels
         }
 
         public ICommand PlaySoundCommand { get; set; }
+        public RelayCommand<object> EndTheGameCommand { get; set; }
 
         private void PlaySound(string pathToSound)
         {
@@ -157,11 +159,13 @@ namespace TestYourKnowledge.ViewModels
             }
 
             Sounds.Remove(sound);
-
-            if (Sounds.Count == 1)
-            {
-                GameEnded = true;
-            }
+            EndTheGameCommand.RaiseCanExecuteChanged();
         }
+
+        private void EndTheGame(object x)
+        {
+            GameEnded = true;
+        }
+
     }
 }

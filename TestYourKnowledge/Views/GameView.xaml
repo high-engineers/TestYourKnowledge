@@ -17,6 +17,7 @@
             <StackPanel Orientation="Horizontal" Margin="20" HorizontalAlignment="Center">
                 <TextBlock Style="{StaticResource BaseTextBlock}" Text="{Binding Name}" Width="400"/>
                 <TextBlock Text="{Binding TimeFromStart}" Style="{StaticResource BaseTextBlock}"/>
+                <Button Content="End the game" Command="{Binding EndTheGameCommand}" Margin="10" Height="30" Width="200" />
             </StackPanel>
         </StackPanel>
 
@@ -32,18 +33,20 @@
                               ItemsSource="{Binding Images}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
-                                <Image Source="{Binding Path}"/>
-                                <Border Width="400"
+                                <Border BorderThickness="1" BorderBrush="White" Margin="10" Padding="10" Background="{StaticResource BackgroundColorBrush}">
+                                    <StackPanel>
+                                        <Image Source="{Binding Path}"/>
+                                        <Border Width="400"
                                         Height="39"
                                         BorderBrush="White"
                                         BorderThickness="2"
                                         AllowDrop="True"
                                         Drop="Sound_Drop"
                                         Background="Transparent">
-                                    <TextBlock Style="{StaticResource BaseTextBlock}"/>
+                                        <TextBlock Style="{StaticResource GamePanelTextBlock}"/>
+                                        </Border>
+                                    </StackPanel>
                                 </Border>
-                            </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>

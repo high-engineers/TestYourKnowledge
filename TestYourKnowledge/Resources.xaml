@@ -41,4 +41,12 @@
         <Setter Property="FontSize" Value="16"/>
     </Style>
 
+    <Style TargetType="{x:Type TextBlock}" x:Key="GamePanelTextBlock">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="{StaticResource BackgroundColorBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ForegroundColorBrush}"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
 </ResourceDictionary>
