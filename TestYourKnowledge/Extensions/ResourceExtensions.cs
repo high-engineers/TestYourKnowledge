@@ -6,8 +6,8 @@ namespace TestYourKnowledge.Extensions
 {
     internal static class ResourceExtensions
     {
-        private static readonly string[] _supportedSoundExtensions = new[] { ".m4a", ".mp3" };
-        private static readonly string[] _supportedImageExtensions = new[] { ".png", ".jpg" };
+        private static readonly string[] _supportedSoundExtensions = new[] { ".m4a", ".mp3", ".wav" };
+        private static readonly string[] _supportedImageExtensions = new[] { ".png", ".jpeg", ".jpg", ".gif" };
 
         internal static bool IsSound(this Resource resource)
         {

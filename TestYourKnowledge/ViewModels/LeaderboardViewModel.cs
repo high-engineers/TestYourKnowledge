@@ -29,32 +29,35 @@ namespace TestYourKnowledge.ViewModels
 
         public void LoadFromFile(string path)
         {
-            using (var reader = new StreamReader(path))
+            var playerResults = new List<PlayerResultModel>();
+            if (File.Exists(path))
             {
-                var playerResults = new List<PlayerResultModel>();
-                while (!reader.EndOfStream)
+                using (var reader = new StreamReader(path))
                 {
-                    var playerResult = reader.ReadLine().Split(';');
-                    playerResults.Add(new PlayerResultModel
+                    while (!reader.EndOfStream)
                     {
-                        Name = playerResult[0],
-                        TimeResult = int.Parse(playerResult[1]),
-                        Score = int.Parse(playerResult[2])
-                    });
-                }
+                        var playerResult = reader.ReadLine().Split(';');
+                        playerResults.Add(new PlayerResultModel
+                        {
+                            Name = playerResult[0],
+                            TimeResult = int.Parse(playerResult[1]),
+                            Score = int.Parse(playerResult[2])
+                        });
+                    }
 
-                var i = 1;
-                Top10 = playerResults
-                    .OrderByDescending(x => x.Score)
-                    .ThenBy(x => x.TimeResult)
-                    .Take(10)
-                    .Select(x => new ResultLeaderboardModel
-                    {
-                        No = i++,
-                        Name = x.Name,
-                        TimeResult = x.TimeResult,
-                        Score = x.Score
-                    }).ToList();
+                    var i = 1;
+                    Top10 = playerResults
+                        .OrderByDescending(x => x.Score)
+                        .ThenBy(x => x.TimeResult)
+                        .Take(10)
+                        .Select(x => new ResultLeaderboardModel
+                        {
+                            No = i++,
+                            Name = x.Name,
+                            TimeResult = x.TimeResult,
+                            Score = x.Score
+                        }).ToList();
+                }
             }
         }
     }

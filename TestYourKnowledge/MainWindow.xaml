@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         xmlns:local="clr-namespace:TestYourKnowledge"
-        Title="MainWindow" Height="768" Width="1024">
+        Title="MainWindow" Height="768" Width="1024"
+        WindowState="Maximized">
     <Grid>
         <Frame x:Name="MainFrame"
                NavigationUIVisibility="Hidden"
