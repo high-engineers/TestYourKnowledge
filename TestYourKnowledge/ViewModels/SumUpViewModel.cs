@@ -63,11 +63,12 @@ namespace TestYourKnowledge.ViewModels
             {
                 Name = Name,
                 TimeResult = TimeFromStart,
-                Score = Score
+                Score = Score,
+                TimeStart = ApplicationViewModel.Instance.TimeStart
             };
             using (var writer = new StreamWriter(path, true))
             {
-                writer.WriteLine($"{playerResult.Name};{playerResult.TimeResult};{playerResult.Score}");
+                writer.WriteLine($"{playerResult.Name};{playerResult.TimeResult};{playerResult.Score};{playerResult.TimeStart}");
             }
         }
     }
