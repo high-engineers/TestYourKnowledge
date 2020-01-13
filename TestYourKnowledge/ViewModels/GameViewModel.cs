@@ -37,7 +37,6 @@ namespace TestYourKnowledge.ViewModels
                 OnPropertyChanged(nameof(TimeFromStart));
             }
         }
-
         private List<Resource> _images = new List<Resource>();
         public List<Resource> Images
         {

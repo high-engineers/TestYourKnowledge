@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
@@ -41,7 +42,8 @@ namespace TestYourKnowledge.ViewModels
                         {
                             Name = playerResult[0],
                             TimeResult = int.Parse(playerResult[1]),
-                            Score = int.Parse(playerResult[2])
+                            Score = int.Parse(playerResult[2]),
+                            TimeStart = DateTime.Parse(playerResult[3])
                         });
                     }
 
@@ -55,7 +57,8 @@ namespace TestYourKnowledge.ViewModels
                             No = i++,
                             Name = x.Name,
                             TimeResult = x.TimeResult,
-                            Score = x.Score
+                            Score = x.Score,
+                            TimeStart = x.TimeStart
                         }).ToList();
                 }
             }
