@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -23,7 +24,6 @@ namespace TestYourKnowledge.ViewModels
             set
             {
                 ApplicationViewModel.Instance.Name = value;
-                OnPropertyChanged(nameof(Name));
             }
         }
 
@@ -62,10 +62,10 @@ namespace TestYourKnowledge.ViewModels
         public GameViewModel()
         {
             ApplicationViewModel.Instance.TimeStart = DateTime.Now;
-            ApplicationViewModel.Instance.CorrectAnswers = 0;
-            PlaySoundCommand = new RelayCommand<string>(PlaySound);
+            PlaySoundCommand = new RelayCommand<Resource>(PlaySound);
             EndTheGameCommand = new RelayCommand<object>(EndTheGame, () => Sounds.Count == 0);
             LoadResources();
+            ApplicationViewModel.Instance.InitializeStatistics(Sounds.Select(x => x.No).ToList());
             UpdateGameStatus();
         }
 
@@ -144,19 +144,19 @@ namespace TestYourKnowledge.ViewModels
         public ICommand PlaySoundCommand { get; set; }
         public RelayCommand<object> EndTheGameCommand { get; set; }
 
-        private void PlaySound(string pathToSound)
+        private void PlaySound(Resource resource)
         {
-            _player.Open(new Uri(Directory.GetCurrentDirectory() + pathToSound));
+            _player.Open(new Uri(Directory.GetCurrentDirectory() + resource.Path));
             _player.Play();
+            ApplicationViewModel.Instance.SoundStatistics[resource.No].ClickedCount++;
         }
 
         public void AssignSoundToImage(Resource sound, Resource image)
         {
-            if (Sounds.Contains(sound) && sound.No == image.No)
+            if (Sounds.Contains(sound))
             {
-                ApplicationViewModel.Instance.CorrectAnswers++;
+                ApplicationViewModel.Instance.ImageStatistics[image.No].IsCorrect = sound.No == image.No;
             }
-
             Sounds.Remove(sound);
             EndTheGameCommand.RaiseCanExecuteChanged();
         }

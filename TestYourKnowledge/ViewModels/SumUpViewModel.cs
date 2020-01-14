@@ -13,31 +13,10 @@ namespace TestYourKnowledge.ViewModels
             set
             {
                 ApplicationViewModel.Instance.Name = value;
-                OnPropertyChanged(nameof(Name));
             }
         }
-
-        private int _timeFromStart;
-        public int TimeFromStart
-        {
-            get => _timeFromStart;
-            set
-            {
-                _timeFromStart = value;
-                OnPropertyChanged(nameof(TimeFromStart));
-            }
-        }
-
-        private int _score;
-        public int Score
-        {
-            get => _score;
-            set
-            {
-                _score = value;
-                OnPropertyChanged(nameof(Score));
-            }
-        }
+        public int TimeFromStart { get; set; }
+        public int Score { get; set; }
 
         public ICommand MainMenuCommand { get; set; }
 
@@ -48,7 +27,7 @@ namespace TestYourKnowledge.ViewModels
         {
             MainMenuCommand = new RelayCommand<object>(GoToMainMenu);
             TimeFromStart = ApplicationViewModel.Instance.TimeStart.GetSecondsDifferenceFromNow();
-            Score = ApplicationViewModel.Instance.CorrectAnswers;
+            Score = ApplicationViewModel.Instance.GetCorrectAnswersCount();
         }
 
         public void GoToMainMenu(object x)

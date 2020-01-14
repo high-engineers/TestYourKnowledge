@@ -61,9 +61,11 @@
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\ResourceExtensions.cs" />
     <Compile Include="Models\AppPage.cs" />
+    <Compile Include="Models\ImageStatisticsModel.cs" />
     <Compile Include="Models\PlayerResultModel.cs" />
     <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\ResultLeaderboardModel.cs" />
+    <Compile Include="Models\SoundStatisticsModel.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
