@@ -69,7 +69,7 @@
                                         ClickMode="Press"
                                         PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown"
                                         Command="{Binding RelativeSource={RelativeSource AncestorType=Page, Mode=FindAncestor}, Path=DataContext.PlaySoundCommand }"
-                                        CommandParameter="{Binding Path}"/>
+                                        CommandParameter="{Binding}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

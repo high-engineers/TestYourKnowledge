@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using TestYourKnowledge.Models;
 
 namespace TestYourKnowledge.ViewModels
@@ -18,39 +20,32 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
-        private string _name;
-        public string Name
+        public string Name { get; set; }
+        public DateTime TimeStart { get; set; }
+        public int GetCorrectAnswersCount()
         {
-            get => _name;
-            set
-            {
-                _name = value;
-                OnPropertyChanged(nameof(Name));
-            }
+            return ImageStatistics.Values.Where(x => x.IsCorrect).ToList().Count;
         }
 
-        private DateTime _timeStart;
-        public DateTime TimeStart
+        public IDictionary<int, SoundStatisticsModel> SoundStatistics { get; set; } = new Dictionary<int, SoundStatisticsModel>();
+        public IDictionary<int, ImageStatisticsModel> ImageStatistics { get; set; } = new Dictionary<int, ImageStatisticsModel>();
+        public void InitializeStatistics(IList<int> resourceNumbers)
         {
-            get => _timeStart;
-            set
+            SoundStatistics = new Dictionary<int, SoundStatisticsModel>();
+            ImageStatistics = new Dictionary<int, ImageStatisticsModel>();
+            foreach(var no in resourceNumbers.OrderBy(x => x))
             {
-                _timeStart = value;
-                OnPropertyChanged(nameof(TimeStart));
+                SoundStatistics.Add(no, new SoundStatisticsModel
+                {
+                    ClickedCount = 0
+                });
+
+                ImageStatistics.Add(no, new ImageStatisticsModel
+                {
+                    IsCorrect = false
+                });
             }
         }
-
-        private int _correctAnswers;
-        public int CorrectAnswers
-        {
-            get => _correctAnswers;
-            set
-            {
-                _correctAnswers = value;
-                OnPropertyChanged(nameof(CorrectAnswers));
-            }
-        }
-
         #region Instance
         private static ApplicationViewModel _instance;
         public static ApplicationViewModel Instance

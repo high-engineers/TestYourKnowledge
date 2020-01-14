@@ -9,16 +9,7 @@ namespace TestYourKnowledge.ViewModels
 {
     internal class LeaderboardViewModel : BaseViewModel
     {
-        private List<ResultLeaderboardModel> _top10 = new List<ResultLeaderboardModel>();
-        public List<ResultLeaderboardModel> Top10
-        {
-            get => _top10;
-            set
-            {
-                _top10 = value;
-                OnPropertyChanged(nameof(Top10));
-            }
-        }
+        public List<ResultLeaderboardModel> Top10 { get; set; } = new List<ResultLeaderboardModel>();
 
         public ICommand MainMenuCommand { get; set; } = new RelayCommand<object>((x) =>
                  ApplicationViewModel.Instance.CurrentPage = AppPage.MainMenu);
