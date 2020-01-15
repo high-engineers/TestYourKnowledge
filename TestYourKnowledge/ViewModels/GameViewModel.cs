@@ -10,7 +10,6 @@ using System.Windows.Media;
 using TestYourKnowledge.Extensions;
 using TestYourKnowledge.Models;
 
-
 namespace TestYourKnowledge.ViewModels
 {
     internal class GameViewModel : BaseViewModel
@@ -139,6 +138,7 @@ namespace TestYourKnowledge.ViewModels
                 Sounds.Add(sounds[i]);
             }
             Images = Images.Shuffle();
+
         }
 
         public ICommand PlaySoundCommand { get; set; }
@@ -148,23 +148,25 @@ namespace TestYourKnowledge.ViewModels
         {
             _player.Open(new Uri(Directory.GetCurrentDirectory() + resource.Path));
             _player.Play();
-            ApplicationViewModel.Instance.SoundStatistics[resource.No].ClickedCount++;
+            ApplicationViewModel.Instance.StatisticsManager.IncreaseClickedCount(resource.No);
         }
 
         public void AssignSoundToImage(Resource sound, Resource image)
         {
             if (Sounds.Contains(sound))
             {
-                ApplicationViewModel.Instance.ImageStatistics[image.No].IsCorrect = sound.No == image.No;
+                ApplicationViewModel.Instance.StatisticsManager.SetImageCorrectness(image.No, sound.No == image.No);
             }
             Sounds.Remove(sound);
-            EndTheGameCommand.RaiseCanExecuteChanged();
+            if (Sounds.Count == 0)
+            {
+                EndTheGameCommand.RaiseCanExecuteChanged();
+            }
         }
 
         private void EndTheGame(object x)
         {
             GameEnded = true;
         }
-
     }
 }

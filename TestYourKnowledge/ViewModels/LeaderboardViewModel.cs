@@ -16,43 +16,8 @@ namespace TestYourKnowledge.ViewModels
 
         public LeaderboardViewModel()
         {
-            LoadFromFile(ApplicationViewModel.LeaderboardPath);
+            Top10 = FileHandler.LoadResults().Take(10).ToList();
         }
 
-        public void LoadFromFile(string path)
-        {
-            var playerResults = new List<PlayerResultModel>();
-            if (File.Exists(path))
-            {
-                using (var reader = new StreamReader(path))
-                {
-                    while (!reader.EndOfStream)
-                    {
-                        var playerResult = reader.ReadLine().Split(';');
-                        playerResults.Add(new PlayerResultModel
-                        {
-                            Name = playerResult[0],
-                            TimeResult = int.Parse(playerResult[1]),
-                            Score = int.Parse(playerResult[2]),
-                            TimeStart = DateTime.Parse(playerResult[3])
-                        });
-                    }
-
-                    var i = 1;
-                    Top10 = playerResults
-                        .OrderByDescending(x => x.Score)
-                        .ThenBy(x => x.TimeResult)
-                        .Take(10)
-                        .Select(x => new ResultLeaderboardModel
-                        {
-                            No = i++,
-                            Name = x.Name,
-                            TimeResult = x.TimeResult,
-                            Score = x.Score,
-                            TimeStart = x.TimeStart
-                        }).ToList();
-                }
-            }
-        }
     }
 }

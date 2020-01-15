@@ -1,7 +1,8 @@
 ﻿namespace TestYourKnowledge.Models
 {
-    internal class ImageStatisticsModel
+    public class SoundClickedCorrectPairModel
     {
+        public int ClickedCount { get; set; }
         public bool IsCorrect { get; set; }
     }
 }

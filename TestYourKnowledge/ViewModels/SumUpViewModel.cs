@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using TestYourKnowledge.Extensions;
 using TestYourKnowledge.Models;
 
@@ -27,28 +26,24 @@ namespace TestYourKnowledge.ViewModels
         {
             MainMenuCommand = new RelayCommand<object>(GoToMainMenu);
             TimeFromStart = ApplicationViewModel.Instance.TimeStart.GetSecondsDifferenceFromNow();
-            Score = ApplicationViewModel.Instance.GetCorrectAnswersCount();
+            Score = ApplicationViewModel.Instance.StatisticsManager.GetCorrectAnswersCount();
         }
 
         public void GoToMainMenu(object x)
         {
-            SaveToFile(ApplicationViewModel.LeaderboardPath);
+            FileHandler.SavePlayerResult(BuildPlayerResultModel());
             ApplicationViewModel.Instance.CurrentPage = AppPage.MainMenu;
         }
-
-        public void SaveToFile(string path)
+        private PlayerResultModel BuildPlayerResultModel()
         {
-            var playerResult = new PlayerResultModel
+            return new PlayerResultModel
             {
                 Name = Name,
                 TimeResult = TimeFromStart,
                 Score = Score,
+                MaxScore = ApplicationViewModel.Instance.StatisticsManager.NumberOfItems,
                 TimeStart = ApplicationViewModel.Instance.TimeStart
             };
-            using (var writer = new StreamWriter(path, true))
-            {
-                writer.WriteLine($"{playerResult.Name};{playerResult.TimeResult};{playerResult.Score};{playerResult.TimeStart}");
-            }
         }
     }
 }
