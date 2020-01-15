@@ -1,6 +1,6 @@
 ﻿namespace TestYourKnowledge.Models
 {
-    public class SoundStatisticsModel
+    internal class SoundStatisticsModel
     {
         public int ClickedCount { get; set; } = 0;
     }
