@@ -47,7 +47,7 @@ namespace TestYourKnowledge
 
                     var i = 1;
                     return playerResults
-                        .OrderByDescending(x => x.Score)
+                        .OrderByDescending(x => (float)x.Score / x.MaxScore)
                         .ThenBy(x => x.TimeResult)
                         .Select(x => new ResultLeaderboardModel
                         {

@@ -47,6 +47,8 @@ namespace TestYourKnowledge.ViewModels
             }
         }
 
+        private List<Resource> _startingSounds = new List<Resource>();
+
         private ObservableCollection<Resource> _sounds = new ObservableCollection<Resource>();
         public ObservableCollection<Resource> Sounds
         {
@@ -91,36 +93,29 @@ namespace TestYourKnowledge.ViewModels
                 if (Directory.Exists(path))
                 {
                     var filePaths = Directory.GetFiles(path);
-                    if (filePaths.Length != 2)
+                    var firstResource = new Resource
                     {
-                        //TODO: notify user that something is wrong in folder number {i}?
-                    }
-                    else
+                        No = noCounter,
+                        Path = @"\" + filePaths[0]
+                    };
+                    var secondResource = new Resource
                     {
-                        var firstResource = new Resource
-                        {
-                            No = noCounter,
-                            Path = @"\" + filePaths[0]
-                        };
-                        var secondResource = new Resource
-                        {
-                            No = noCounter,
-                            Path = @"\" + filePaths[1]
-                        };
+                        No = noCounter,
+                        Path = @"\" + filePaths[1]
+                    };
 
-                        //one and only acceptable situation is two files per subfolder
-                        //one resource is sound, one resource is image
-                        //if any other situation - do not add any image or sound - kinda transactional
-                        if (firstResource.IsSound() && secondResource.IsImage())
-                        {
-                            sounds.Add(firstResource);
-                            Images.Add(secondResource);
-                        }
-                        else if (firstResource.IsImage() && secondResource.IsSound())
-                        {
-                            Images.Add(firstResource);
-                            sounds.Add(secondResource);
-                        }
+                    //one and only acceptable situation is two files per subfolder
+                    //one resource is sound, one resource is image
+                    //if any other situation - do not add any image or sound - kinda transactional
+                    if (firstResource.IsSound() && secondResource.IsImage())
+                    {
+                        sounds.Add(firstResource);
+                        Images.Add(secondResource);
+                    }
+                    else if (firstResource.IsImage() && secondResource.IsSound())
+                    {
+                        Images.Add(firstResource);
+                        sounds.Add(secondResource);
                     }
                     noCounter++;
                 }
@@ -134,8 +129,9 @@ namespace TestYourKnowledge.ViewModels
             sounds = sounds.Shuffle();
             for (int i = 0; i < sounds.Count; i++)
             {
-                sounds[i].Index = i+1;
+                sounds[i].Index = i + 1;
                 Sounds.Add(sounds[i]);
+                _startingSounds.Add(sounds[i]);
             }
             Images = Images.Shuffle();
 
@@ -151,16 +147,33 @@ namespace TestYourKnowledge.ViewModels
             ApplicationViewModel.Instance.StatisticsManager.IncreaseClickedCount(resource.No);
         }
 
-        public void AssignSoundToImage(Resource sound, Resource image)
+        public void AssignSoundToImage(Resource sound, Resource image, string oldSoundIndex)
         {
             if (Sounds.Contains(sound))
             {
                 ApplicationViewModel.Instance.StatisticsManager.SetImageCorrectness(image.No, sound.No == image.No);
             }
+
             Sounds.Remove(sound);
+            AddBackOldSound(oldSoundIndex);
+
             if (Sounds.Count == 0)
             {
                 EndTheGameCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public void AddBackOldSound(string oldSoundIndex)
+        {
+            if (int.TryParse(oldSoundIndex, out var index))
+            {
+                var newIndex = Sounds
+                    .IndexOf(Sounds
+                        .FirstOrDefault(x => x.Index > index));
+                Sounds.Insert(newIndex == -1
+                    ? Sounds.Count
+                    : newIndex,
+                    _startingSounds[index - 1]);
             }
         }
 
